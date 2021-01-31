@@ -10,7 +10,7 @@ using PainelContabil.Repository;
 namespace PainelContabil.Repository.Migrations
 {
     [DbContext(typeof(PainelContabilContext))]
-    [Migration("20210131180716_init")]
+    [Migration("20210131191213_init")]
     partial class init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -38,7 +38,7 @@ namespace PainelContabil.Repository.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<decimal>("Valor")
-                        .HasColumnType("decimal(18,2)");
+                        .HasColumnType("decimal(18,4)");
 
                     b.HasKey("Id");
 

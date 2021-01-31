@@ -14,7 +14,7 @@ namespace PainelContabil.Repository.Migrations
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     DataLancamento = table.Column<DateTime>(nullable: false),
-                    Valor = table.Column<decimal>(nullable: false),
+                    Valor = table.Column<decimal>(type: "decimal(18,4)", nullable: false),
                     Tipo = table.Column<string>(nullable: true),
                     Status = table.Column<string>(nullable: true)
                 },
