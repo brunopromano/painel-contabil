@@ -1,0 +1,126 @@
+<button class="btn btn-outline-primary mt-4" (click)="abreNovoLancamento(templateNovoLancamento)">
+    Novo Lançamento
+</button>
+
+<table class="table table-stripped mt-3">
+    <thead class="thead-dark">
+        <tr>
+            <th>#</th>
+            <th>Data Lançamento</th>
+            <th>Valor (R$)</th>
+            <th>Tipo</th>
+            <th>Status</th>
+            <th>Editar / Excluir</th>
+        </tr>
+    </thead>
+    <tbody *ngIf="lancamentos && lancamentos.length">
+        <tr *ngFor="let lancamento of lancamentos">
+            <td>{{ lancamento.id }}</td>
+            <td>{{ lancamento.dataLancamento }}</td>
+            <td>{{ lancamento.valor }}</td>
+            <td>{{ lancamento.tipo }}</td>
+            <td>{{ lancamento.status }}</td>
+            <td>
+                <button class="btn btn-sm btn-primary mr-2"
+                        [disabled]="lancamento.status === 'Conciliado'"
+                        (click)="editarLancamento(lancamento, templateNovoLancamento)"
+                >
+                    Editar
+                </button>
+                <button class="btn btn-sm btn-danger">
+                    Excluir
+                </button>
+            </td>
+        </tr>
+    </tbody>
+</table>
+
+<div bsModal #templateNovoLancamento="bs-modal" class="modal fade" tabindex="-1" role="dialog"
+    aria-labelledby="dialog-sizes-name1">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 id="dialog-sizes-name1" class="modal-title pull-left">Lançamento</h4>
+                <button type="button" class="close pull-right" (click)="templateNovoLancamento.hide()"
+                    aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form [formGroup]="fgRegistro">
+                    <div class="form-row">
+                        <div class="form-group col-md-6">
+                            <label>Data do Lançamento</label>
+                            <input type="text" class="form-control"
+                                [ngClass]="{'is-invalid': fgRegistro.get('dataLancamento').errors && fgRegistro.get('dataLancamento').touched}"
+                                formControlName="dataLancamento">
+                            <div *ngIf="fgRegistro.get('dataLancamento').hasError('required') && fgRegistro.get('dataLancamento').touched"
+                                class="invalid-feedback">A data é obrigatória</div>
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label>Valor (em R$)</label>
+                            <input type="text" class="form-control"
+                                [ngClass]="{'is-invalid': fgRegistro.get('valor').errors && fgRegistro.get('valor').touched}"
+                                formControlName="valor">
+                            <div class="invalid-feedback"
+                                *ngIf="fgRegistro.get('valor').hasError('required') && fgRegistro.get('valor').touched">
+                                O valor é obrigatório
+                            </div>
+                            <div class="invalid-feedback"
+                                *ngIf="fgRegistro.get('valor').hasError('max') && fgRegistro.get('valor').touched">
+                                O valor deve ser maior que R$ 1
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <!-- <div class="form-group col-md-4">
+                            <label>Data e Hora</label>
+                            <input type="text" class="form-control" bsDatepicker
+                                [ngClass]="{'is-invalid': fgRegistro.get('dataEvento').errors && fgRegistro.get('dataEvento').touched}"
+                                formControlName="dataEvento">
+                            <div class="invalid-feedback"
+                                *ngIf="fgRegistro.get('dataEvento').hasError('required') && fgRegistro.get('dataEvento').touched">
+                                A data e hora do evento são obrigatórios
+                            </div>
+                        </div> -->
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group col-md-6">
+                            <label>Tipo</label>
+                            <input type="text" class="form-control is-invalid"
+                                [ngClass]="{'is-invalid': fgRegistro.get('tipo').errors && fgRegistro.get('tipo').touched}"
+                                formControlName="tipo">
+                            <div class="invalid-feedback"
+                                *ngIf="fgRegistro.get('tipo').hasError('required') && fgRegistro.get('tipo').touched">
+                                O tipo do lançamento é obrigatório
+                            </div>
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label>Status</label>
+                            <input type="text" class="form-control is-invalid"
+                                [ngClass]="{'is-invalid': fgRegistro.get('status').errors && fgRegistro.get('status').touched}"
+                                formControlName="status">
+                            <div class="invalid-feedback"
+                                *ngIf="fgRegistro.get('status').hasError('required') && fgRegistro.get('status').touched">
+                                A quantidade de pessoas é obrigatório
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer d-flex">
+                <button class="btn btn-secondary" (click)="fechaModal(templateNovoLancamento)">
+                    Fechar
+                </button>
+                <button class="btn btn-primary ml-auto" [disabled]="fgRegistro.invalid"
+                    (click)="salvaAlteracao(templateNovoLancamento)">
+                    Salvar
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<br><br>
+
+<!-- Auxílio na visualização dos dados do form -->
+<p>Form Value: {{ fgRegistro.value | json }}</p>
+<p>Form Status: {{ fgRegistro.status | json }}</p>
