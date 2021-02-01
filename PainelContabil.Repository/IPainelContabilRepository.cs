@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Threading.Tasks;
 using PainelContabil.Domain;
 
 namespace PainelContabil.Repository
@@ -10,7 +11,8 @@ namespace PainelContabil.Repository
         void Delete<T>(T entity) where T : class;
         Task<bool> SaveChangesAsync();
 
-        // CRUD de Lançamento Financeiro
+        // Lançamento Financeiro
         Task<LancamentoFinanceiro[]> GetAllLancamentoFinanceiro();
+        Task<LancamentoFinanceiro> GetLancamentoFinanceiroById(int lancamentoId);
     }
 }

@@ -18,7 +18,7 @@ namespace PainelContabil.API.Controllers
         {
             _logger = logger;
             _repo = repo;
-        }
+       }
 
         [HttpGet]
         public async Task<IActionResult> Get()
@@ -32,6 +32,23 @@ namespace PainelContabil.API.Controllers
             catch (System.Exception)
             {
                 return this.StatusCode(StatusCodes.Status500InternalServerError, "Falha no banco de dados!");
+            }
+        }
+
+        [HttpGet("{lancamentoId}")]
+        public async Task<IActionResult> GetById(int lancamentoId)
+        {
+            try
+            {
+                var result = await _repo.GetLancamentoFinanceiroById(lancamentoId);
+
+                if (result == null) return NotFound();
+
+                return Ok(result);
+            }
+            catch (System.Exception)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, "Falha no banco de dados!");
             }
         }
 
@@ -50,6 +67,54 @@ namespace PainelContabil.API.Controllers
             catch (System.Exception)
             {
                 return this.StatusCode(StatusCodes.Status500InternalServerError, "Falha no banco de dados");
+            }
+
+            return BadRequest();
+        }
+
+        [HttpPut("{eventoId}")]
+        public async Task<IActionResult> Put(int lancamentoId, LancamentoFinanceiro model)
+        {
+            try
+            {
+                var lancamento = await _repo.GetLancamentoFinanceiroById(lancamentoId);
+
+                if (lancamento == null) return NotFound();
+
+                _repo.Update(model);
+
+                if (await _repo.SaveChangesAsync())
+                {
+                    return Created($"/api/lancamentofinanceiro/{model.Id}", model);
+                }
+            }
+            catch (System.Exception)
+            {
+                return this.StatusCode(StatusCodes.Status500InternalServerError, "Falha no banco de dados!");
+            }
+
+            return BadRequest();
+        }
+
+        [HttpDelete("{lancamentoId}")]
+        public async Task<IActionResult> Delete(int lancamentoId)
+        {
+            try
+            {
+                var result = _repo.GetLancamentoFinanceiroById(lancamentoId);
+
+                if (result == null) return NotFound();
+
+                _repo.Delete(result);
+
+                if (await _repo.SaveChangesAsync())
+                {
+                    return Ok();
+                }
+            }
+            catch (System.Exception)
+            {
+                return this.StatusCode(StatusCodes.Status500InternalServerError, "Falha no banco de dados!");
             }
 
             return BadRequest();

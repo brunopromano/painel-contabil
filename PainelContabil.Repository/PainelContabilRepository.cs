@@ -2,6 +2,8 @@ using System.Linq;
 using System.Threading.Tasks;
 using PainelContabil.Domain;
 using Microsoft.EntityFrameworkCore;
+using System;
+using System.Collections.Generic;
 
 namespace PainelContabil.Repository
 {
@@ -36,6 +38,15 @@ namespace PainelContabil.Repository
             query = query.OrderByDescending(d => d.DataLancamento);
 
             return await query.ToArrayAsync();
+        }
+
+        public async Task<LancamentoFinanceiro> GetLancamentoFinanceiroById(int lancamentoId)
+        {
+            IQueryable<LancamentoFinanceiro> query = _context.LancamentosFinanceiros;
+
+            query = query.Where(i => i.Id == lancamentoId);
+
+            return await query.FirstOrDefaultAsync();
         }
 
         public async Task<bool> SaveChangesAsync()
