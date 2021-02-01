@@ -72,7 +72,7 @@ namespace PainelContabil.API.Controllers
             return BadRequest();
         }
 
-        [HttpPut("{eventoId}")]
+        [HttpPut("{lancamentoId}")]
         public async Task<IActionResult> Put(int lancamentoId, LancamentoFinanceiro model)
         {
             try
@@ -101,7 +101,7 @@ namespace PainelContabil.API.Controllers
         {
             try
             {
-                var result = _repo.GetLancamentoFinanceiroById(lancamentoId);
+                var result = await _repo.GetLancamentoFinanceiroById(lancamentoId);
 
                 if (result == null) return NotFound();
 

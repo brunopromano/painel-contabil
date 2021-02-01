@@ -15,14 +15,14 @@ namespace PainelContabil.Repository
             _context = context;
         }
 
-        public BalancoDia GetBalancoDia(DateTime dia)
+        public BalancoDia[] GetRelatorioMensal(int mes, int ano)
         {
             IQueryable<BalancoDia> query = _context.BalancosDias
-                .Where(d => d.DataBalanco == dia);
+                .Where(d => d.DataBalanco.Month == mes && d.DataBalanco.Year == ano);
 
             query = query.OrderByDescending(d => d.DataBalanco);
             
-            return query.FirstOrDefault();
+            return query.ToArray();
         }
     }
 }

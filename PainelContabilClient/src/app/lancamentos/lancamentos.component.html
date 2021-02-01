@@ -16,18 +16,17 @@
     <tbody *ngIf="lancamentos && lancamentos.length">
         <tr *ngFor="let lancamento of lancamentos">
             <td>{{ lancamento.id }}</td>
-            <td>{{ lancamento.dataLancamento }}</td>
+            <td>{{ lancamento.dataLancamento | date: 'dd/MM/yyyy' }}</td>
             <td>{{ lancamento.valor }}</td>
             <td>{{ lancamento.tipo }}</td>
             <td>{{ lancamento.status }}</td>
             <td>
-                <button class="btn btn-sm btn-primary mr-2"
-                        [disabled]="lancamento.status === 'Conciliado'"
-                        (click)="editarLancamento(lancamento, templateNovoLancamento)"
-                >
+                <button class="btn btn-sm btn-primary mr-2" [disabled]="lancamento.status === 'Conciliado'"
+                    (click)="editarLancamento(lancamento, templateNovoLancamento)">
                     Editar
                 </button>
-                <button class="btn btn-sm btn-danger">
+                <button class="btn btn-sm btn-danger" [disabled]="lancamento.status === 'Conciliado'"
+                    (click)="excluirLancamento(lancamento, modalConfirmaExlusao)">
                     Excluir
                 </button>
             </td>
@@ -40,7 +39,7 @@
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header">
-                <h4 id="dialog-sizes-name1" class="modal-title pull-left">Lançamento</h4>
+                <h4 class="modal-title pull-left">Lançamento</h4>
                 <button type="button" class="close pull-right" (click)="templateNovoLancamento.hide()"
                     aria-label="Close"></button>
             </div>
@@ -49,7 +48,7 @@
                     <div class="form-row">
                         <div class="form-group col-md-6">
                             <label>Data do Lançamento</label>
-                            <input type="text" class="form-control"
+                            <input type="date" class="form-control" [disabled]=""
                                 [ngClass]="{'is-invalid': fgRegistro.get('dataLancamento').errors && fgRegistro.get('dataLancamento').touched}"
                                 formControlName="dataLancamento">
                             <div *ngIf="fgRegistro.get('dataLancamento').hasError('required') && fgRegistro.get('dataLancamento').touched"
@@ -71,16 +70,6 @@
                         </div>
                     </div>
                     <div class="form-row">
-                        <!-- <div class="form-group col-md-4">
-                            <label>Data e Hora</label>
-                            <input type="text" class="form-control" bsDatepicker
-                                [ngClass]="{'is-invalid': fgRegistro.get('dataEvento').errors && fgRegistro.get('dataEvento').touched}"
-                                formControlName="dataEvento">
-                            <div class="invalid-feedback"
-                                *ngIf="fgRegistro.get('dataEvento').hasError('required') && fgRegistro.get('dataEvento').touched">
-                                A data e hora do evento são obrigatórios
-                            </div>
-                        </div> -->
                     </div>
                     <div class="form-row">
                         <div class="form-group col-md-6">
@@ -111,8 +100,35 @@
                     Fechar
                 </button>
                 <button class="btn btn-primary ml-auto" [disabled]="fgRegistro.invalid"
-                    (click)="salvaAlteracao(templateNovoLancamento)">
+                    (click)="salvaAlteracao(lancamento, templateNovoLancamento)">
                     Salvar
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div bsModal #modalConfirmaExlusao="bs-modal" class="modal fade" tabindex="-1" role="dialog"
+    aria-labelledby="dialog-sizes-name1">
+    <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title pull-left">
+                    Deletando Lançamento
+                </h4>
+                <button type="button" class="close pull-right" (click)="modalConfirmaExlusao.hide()" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <p>{{ bodyDeletarLancamento }}</p>
+            </div>
+            <div class="modal-footer btn-group d-flex">
+                <button type="button" class="btn btn-outline-primary" (click)="modalConfirmaExlusao.hide()">
+                    CANCELAR
+                </button>
+                <button type="button" class="btn btn-danger" (click)="confirmaExclusaoLancamento(modalConfirmaExlusao)">
+                    DELETAR
                 </button>
             </div>
         </div>
@@ -124,3 +140,4 @@
 <!-- Auxílio na visualização dos dados do form -->
 <p>Form Value: {{ fgRegistro.value | json }}</p>
 <p>Form Status: {{ fgRegistro.status | json }}</p>
+<p>{{ lancamento | json }}</p>

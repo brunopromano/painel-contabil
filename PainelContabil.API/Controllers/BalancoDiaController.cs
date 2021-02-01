@@ -20,12 +20,12 @@ namespace PainelContabil.API.Controllers
             _repo = repo;
         }
 
-        [HttpGet("{dia}")]
-        public IActionResult Get(DateTime dia)
+        [HttpGet("{mes}/{ano}")]
+        public IActionResult Get(int mes, int ano)
         {
             try
             {
-                var results = _repo.GetBalancoDia(dia);
+                var results = _repo.GetRelatorioMensal(mes, ano);
 
                 if (results == null) return NotFound();
 

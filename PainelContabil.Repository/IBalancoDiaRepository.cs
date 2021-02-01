@@ -5,6 +5,6 @@ namespace PainelContabil.Repository
 {
     public interface IBalancoDiaRepository
     {
-        BalancoDia GetBalancoDia(DateTime dia);
+        BalancoDia[] GetRelatorioMensal(int mes, int ano);
     }
 }
