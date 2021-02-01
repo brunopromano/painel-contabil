@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using PainelContabil.Repository;
 
 namespace PainelContabil.Repository.Migrations
 {
     [DbContext(typeof(PainelContabilContext))]
-    partial class PainelContabilContextModelSnapshot : ModelSnapshot
+    [Migration("20210201042619_balancodia")]
+    partial class balancodia
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

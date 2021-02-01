@@ -35,6 +35,7 @@ namespace PainelContabil.API
                 x => x.UseSqlServer(Configuration.GetConnectionString("SqlServerConnection"))
             );
 
+            services.AddScoped<IBalancoDiaRepository, BalancoDiaRepository>();
             services.AddScoped<IPainelContabilRepository, PainelContabilRepository>();
 
             services.AddControllers();
