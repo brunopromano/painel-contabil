@@ -6,11 +6,11 @@ using PainelContabil.Domain;
 
 namespace PainelContabil.Repository
 {
-    public class BalancoDiaRepository : IBalancoDiaRepository
+    public class RelatorioMensalRepository : IRelatorioMensalRepository
     {
         private readonly PainelContabilContext _context;
 
-        public BalancoDiaRepository(PainelContabilContext context)
+        public RelatorioMensalRepository(PainelContabilContext context)
         {
             _context = context;
         }

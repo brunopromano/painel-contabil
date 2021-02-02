@@ -13,6 +13,7 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using PainelContabil.Repository;
 using Microsoft.OpenApi.Models;
+using PainelContabil.Reposity;
 
 namespace PainelContabil.API
 {
@@ -36,8 +37,9 @@ namespace PainelContabil.API
                 x => x.UseSqlServer(Configuration.GetConnectionString("SqlServerConnection"))
             );
 
-            services.AddScoped<IBalancoDiaRepository, BalancoDiaRepository>();
             services.AddScoped<IPainelContabilRepository, PainelContabilRepository>();
+            services.AddScoped<IRelatorioMensalRepository, RelatorioMensalRepository>();
+            services.AddScoped<IBalancoDiarioRepository, BalancoDiarioRepository>();
 
             services.AddControllers();
 

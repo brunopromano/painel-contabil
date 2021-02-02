@@ -17,13 +17,15 @@ import { AppComponent } from './app.component';
 import { NavComponent } from './nav/nav.component';
 import { LancamentosComponent } from './lancamentos/lancamentos.component';
 import { RelatorioMensalComponent } from './relatorio-mensal/relatorio-mensal.component';
+import { ConciliacaoDiariaComponent } from './conciliacao-diaria/conciliacao-diaria.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     NavComponent,
     LancamentosComponent,
-    RelatorioMensalComponent
+    RelatorioMensalComponent,
+    ConciliacaoDiariaComponent
   ],
   imports: [
     BrowserModule,

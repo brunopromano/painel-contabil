@@ -11,7 +11,7 @@ import { BalancoDia } from '../_models/BalancoDia';
 })
 export class RelatorioMensalComponent implements OnInit {
 
-  baseUrl = 'https://localhost:5001/api/balancodia';
+  baseUrl = 'https://localhost:5001/api/relatoriomensal';
   mes: number;
   ano: number;
   balancosDias: BalancoDia[];

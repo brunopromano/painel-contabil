@@ -22,13 +22,22 @@ export class LancamentosComponent implements OnInit {
   modoSalvar = 'post';
 
   constructor(
-      private http: HttpClient
+    private http: HttpClient
     , private fb: FormBuilder
   ) { }
 
   ngOnInit(): void {
     this._validaForm();
     this.getLancamentos();
+  }
+
+  _validaForm(): any {
+    this.fgRegistro = this.fb.group({
+      dataLancamento: ['', Validators.required],
+      valor: ['', [Validators.required, Validators.min(1)]],
+      tipo: ['', Validators.required],
+      status: ['', Validators.required]
+    });
   }
 
   abreNovoLancamento(template: any): any {
@@ -64,32 +73,6 @@ export class LancamentosComponent implements OnInit {
     this.fgRegistro.controls.dataLancamento.disable();
   }
 
-  excluirLancamento(lancamento: Lancamento, template: any) {
-    this.abreModal(template);
-    this.lancamento = lancamento;
-    this.bodyDeletarLancamento = `Tem certeza que deseja excluir o lançamento #${ lancamento.id }, no valor de R$${ lancamento.valor }?`;
-  }
-
-  confirmaExclusaoLancamento(template: any) {
-    this.http.delete<Lancamento>(`${this.baseUrl}/${this.lancamento.id}`).subscribe(
-      () => {
-        console.log(template);
-        template.hide();
-        this.getLancamentos();
-      }, error => {
-        console.log(error);
-      });
-  }
-
-  _validaForm(): any {
-    this.fgRegistro = this.fb.group({
-      dataLancamento: ['', Validators.required],
-      valor: ['', [Validators.required, Validators.min(1)]],
-      tipo: ['', Validators.required],
-      status: ['', Validators.required]
-    });
-  }
-
   salvaAlteracao(lancamento: Lancamento, template: any): void {
     if (this.fgRegistro.valid) {
       if (this.modoSalvar === 'post') {
@@ -97,19 +80,17 @@ export class LancamentosComponent implements OnInit {
         this.lancamento.dataLancamento = new Date();
         this.http.post(this.baseUrl, this.lancamento).subscribe(
           (response) => {
-            console.log(response);
             template.hide();
             this.getLancamentos();
           }, error => {
             console.log(error);
           });
       } else {
-        this.lancamento = Object.assign({id: this.lancamento.id}, this.fgRegistro.value);
+        this.lancamento = Object.assign({ id: this.lancamento.id }, this.fgRegistro.value);
         console.log(this.lancamento);
         this.lancamento.dataLancamento = new Date();
         this.http.put(`${this.baseUrl}/${this.lancamento.id}`, this.lancamento).subscribe(
           (response) => {
-            console.log(response);
             template.hide();
             this.getLancamentos();
           }, error => {
@@ -119,4 +100,21 @@ export class LancamentosComponent implements OnInit {
       }
     }
   }
+
+  excluirLancamento(lancamento: Lancamento, template: any) {
+    this.abreModal(template);
+    this.lancamento = lancamento;
+    this.bodyDeletarLancamento = `Tem certeza que deseja excluir o lançamento #${lancamento.id}, no valor de R$${lancamento.valor}?`;
+  }
+
+  confirmaExclusaoLancamento(template: any) {
+    this.http.delete<Lancamento>(`${this.baseUrl}/${this.lancamento.id}`).subscribe(
+      () => {
+        template.hide();
+        this.getLancamentos();
+      }, error => {
+        console.log(error);
+      });
+  }
+
 }

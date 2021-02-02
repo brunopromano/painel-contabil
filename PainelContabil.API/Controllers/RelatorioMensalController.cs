@@ -8,17 +8,17 @@ using PainelContabil.Repository;
 namespace PainelContabil.API.Controllers
 {
     /// <summary>
-    /// Endpoint BalancoDia
+    /// Endpoint RelatorioMensal
     /// </summary>
     [Produces("application/json")]
     [Route("api/[controller]")]
     [ApiController]
-    public class BalancoDiaController : ControllerBase
+    public class RelatorioMensalController : ControllerBase
     {
-        private readonly ILogger<BalancoDiaController> _logger;
-        private readonly IBalancoDiaRepository _repo;
+        private readonly ILogger<RelatorioMensalController> _logger;
+        private readonly IRelatorioMensalRepository _repo;
 
-        public BalancoDiaController(ILogger<BalancoDiaController> logger, IBalancoDiaRepository repo)
+        public RelatorioMensalController(ILogger<RelatorioMensalController> logger, IRelatorioMensalRepository repo)
         {
             _logger = logger;
             _repo = repo;

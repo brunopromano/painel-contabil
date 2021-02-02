@@ -1,5 +1,5 @@
 <h3 class="mt-3">Relatório Mensal</h3>
-<div class="">
+<div>
     <form [formGroup]="relatorioForm" class="inline-form">
         <div class="form-row">
             <div class="form-group col-md-2">
@@ -52,8 +52,8 @@
     <tbody *ngIf="balancosDias && balancosDias.length">
         <tr *ngFor="let balancoDia of balancosDias">
             <td>{{ balancoDia.dataBalanco | date: 'dd/MM/yyyy' }}</td>
-            <td>{{ balancoDia.valorTotalCredito | currency:'BRL':true  }}</td>
-            <td>{{ balancoDia.valorTotalDebito |  currency:'BRL':true  }}</td>
+            <td>{{ balancoDia.valorTotalCredito | currency:'BRL':true }}</td>
+            <td>{{ balancoDia.valorTotalDebito | currency:'BRL':true }}</td>
             <td [ngStyle]="{'color': (balancoDia.saldo < 0) ? 'red' : 'black'}">{{ balancoDia.saldo | currency:'BRL':true  }}</td>
         </tr>
     </tbody>
