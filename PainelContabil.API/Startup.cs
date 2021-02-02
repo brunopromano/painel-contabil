@@ -12,6 +12,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using PainelContabil.Repository;
+using Microsoft.OpenApi.Models;
 
 namespace PainelContabil.API
 {
@@ -40,6 +41,25 @@ namespace PainelContabil.API
 
             services.AddControllers();
 
+            services.AddSwaggerGenNewtonsoftSupport();
+
+            services.AddSwaggerGen(c =>
+            {
+                c.SwaggerGeneratorOptions.IgnoreObsoleteActions = true;
+                c.SwaggerDoc("v1", new OpenApiInfo
+                {
+                    Version = "v1",
+                    Title = "Painel Contabil API",
+                    Description = "API para a prova de competência da GAD",
+                    Contact = new OpenApiContact
+                    {
+                        Name = "Bruno Romano",
+                        Email = "brunopromano@gmail.com",
+                    }
+                });
+            });
+            
+            
             services.AddCors();
         }
 
@@ -51,14 +71,21 @@ namespace PainelContabil.API
                 app.UseDeveloperExceptionPage();
             }
 
-            app.UseHttpsRedirection();
+            app.UseSwagger();
+
+            app.UseSwaggerUI(c =>
+            {
+                c.SwaggerEndpoint("/swagger/v1/swagger.json", "API PainelContabil v1");
+            });
 
             app.UseRouting();
+
+            app.UseHttpsRedirection();
 
             app.UseCors(x => x.AllowAnyHeader().AllowAnyMethod().AllowAnyOrigin());
 
             app.UseAuthorization();
-
+            
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();

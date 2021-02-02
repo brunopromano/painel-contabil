@@ -7,7 +7,11 @@ using PainelContabil.Repository;
 
 namespace PainelContabil.API.Controllers
 {
-    [Route("api/{controller}")]
+    /// <summary>
+    /// Endpoint BalancoDia
+    /// </summary>
+    [Produces("application/json")]
+    [Route("api/[controller]")]
     [ApiController]
     public class BalancoDiaController : ControllerBase
     {
@@ -20,6 +24,12 @@ namespace PainelContabil.API.Controllers
             _repo = repo;
         }
 
+        /// <summary>
+        /// Obtém o relatório mensal agrupado por dia
+        /// </summary>
+        /// <param name="mes">Mês a ser consultado</param>
+        /// <param name="ano">Ano a ser consultado</param>
+        /// <return>Lista com o resultado o mês/ano</return>
         [HttpGet("{mes}/{ano}")]
         public IActionResult Get(int mes, int ano)
         {

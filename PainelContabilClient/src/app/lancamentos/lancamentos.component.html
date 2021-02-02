@@ -16,8 +16,8 @@
     <tbody *ngIf="lancamentos && lancamentos.length">
         <tr *ngFor="let lancamento of lancamentos">
             <td>{{ lancamento.id }}</td>
-            <td>{{ lancamento.dataLancamento | date: 'dd/MM/yyyy' }}</td>
-            <td>{{ lancamento.valor }}</td>
+            <td>{{ lancamento.dataLancamento | date: 'dd/MM/yyyy hh:mm' }}</td>
+            <td>{{ lancamento.valor | currency:'BRL':true }}</td>
             <td>{{ lancamento.tipo }}</td>
             <td>{{ lancamento.status }}</td>
             <td>
@@ -56,7 +56,8 @@
                         </div>
                         <div class="form-group col-md-6">
                             <label>Valor (em R$)</label>
-                            <input type="text" class="form-control"
+                            <input type="text" class="form-control" currencyMask
+                                [options]="{ prefix: 'R$ ', thousands: '.', decimal: ',' }"
                                 [ngClass]="{'is-invalid': fgRegistro.get('valor').errors && fgRegistro.get('valor').touched}"
                                 formControlName="valor">
                             <div class="invalid-feedback"
@@ -74,9 +75,15 @@
                     <div class="form-row">
                         <div class="form-group col-md-6">
                             <label>Tipo</label>
-                            <input type="text" class="form-control is-invalid"
+                            <div class="form-group">
+                                <div class="btn-group" btnRadioGroup formControlName="tipo">
+                                    <label btnRadio="Crédito" class="btn btn-primary">Crédito</label>
+                                    <label btnRadio="Débito" class="btn btn-danger">Débito</label>
+                                </div>
+                            </div>
+                            <!-- <input type="text" class="form-control is-invalid"
                                 [ngClass]="{'is-invalid': fgRegistro.get('tipo').errors && fgRegistro.get('tipo').touched}"
-                                formControlName="tipo">
+                                formControlName="tipo"> -->
                             <div class="invalid-feedback"
                                 *ngIf="fgRegistro.get('tipo').hasError('required') && fgRegistro.get('tipo').touched">
                                 O tipo do lançamento é obrigatório
@@ -84,13 +91,19 @@
                         </div>
                         <div class="form-group col-md-6">
                             <label>Status</label>
-                            <input type="text" class="form-control is-invalid"
+                            <div class="form-group">
+                                <div class="btn-group" btnRadioGroup formControlName="status">
+                                    <label btnRadio="Conciliado" class="btn btn-primary">Conciliado</label>
+                                    <label btnRadio="Não Conciliado" class="btn btn-danger">Não Conciliado</label>
+                                </div>
+                            </div>
+                            <!-- <input type="text" class="form-control is-invalid"
                                 [ngClass]="{'is-invalid': fgRegistro.get('status').errors && fgRegistro.get('status').touched}"
                                 formControlName="status">
                             <div class="invalid-feedback"
                                 *ngIf="fgRegistro.get('status').hasError('required') && fgRegistro.get('status').touched">
                                 A quantidade de pessoas é obrigatório
-                            </div>
+                            </div> -->
                         </div>
                     </div>
                 </form>

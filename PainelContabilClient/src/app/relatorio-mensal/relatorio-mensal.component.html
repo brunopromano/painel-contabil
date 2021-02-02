@@ -52,9 +52,9 @@
     <tbody *ngIf="balancosDias && balancosDias.length">
         <tr *ngFor="let balancoDia of balancosDias">
             <td>{{ balancoDia.dataBalanco | date: 'dd/MM/yyyy' }}</td>
-            <td>{{ balancoDia.valorTotalCredito }}</td>
-            <td>{{ balancoDia.valorTotalDebito }}</td>
-            <td>{{ balancoDia.saldo }}</td>
+            <td>{{ balancoDia.valorTotalCredito | currency:'BRL':true  }}</td>
+            <td>{{ balancoDia.valorTotalDebito |  currency:'BRL':true  }}</td>
+            <td [ngStyle]="{'color': (balancoDia.saldo < 0) ? 'red' : 'black'}">{{ balancoDia.saldo | currency:'BRL':true  }}</td>
         </tr>
     </tbody>
     <tfoot>

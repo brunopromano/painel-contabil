@@ -1,9 +1,7 @@
 import { HttpClient } from '@angular/common/http';
-import { Component, OnInit } from '@angular/core';
-
+import { Component, ChangeDetectionStrategy, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
-import { Observable } from 'rxjs';
+// import { BsModalService } from 'ngx-bootstrap/modal';
 
 import { Lancamento } from '../_models/Lancamento';
 
@@ -13,7 +11,8 @@ import { Lancamento } from '../_models/Lancamento';
   styleUrls: ['./lancamentos.component.css']
 })
 export class LancamentosComponent implements OnInit {
-  
+
+  radioModel = 'Middle';
 
   baseUrl = 'https://localhost:5001/api/lancamentofinanceiro';
   bodyDeletarLancamento = '';
@@ -25,7 +24,6 @@ export class LancamentosComponent implements OnInit {
   constructor(
       private http: HttpClient
     , private fb: FormBuilder
-    , private modalService: BsModalService
   ) { }
 
   ngOnInit(): void {
@@ -96,6 +94,7 @@ export class LancamentosComponent implements OnInit {
     if (this.fgRegistro.valid) {
       if (this.modoSalvar === 'post') {
         this.lancamento = Object.assign({}, this.fgRegistro.value);
+        this.lancamento.dataLancamento = new Date();
         this.http.post(this.baseUrl, this.lancamento).subscribe(
           (response) => {
             console.log(response);
@@ -107,6 +106,7 @@ export class LancamentosComponent implements OnInit {
       } else {
         this.lancamento = Object.assign({id: this.lancamento.id}, this.fgRegistro.value);
         console.log(this.lancamento);
+        this.lancamento.dataLancamento = new Date();
         this.http.put(`${this.baseUrl}/${this.lancamento.id}`, this.lancamento).subscribe(
           (response) => {
             console.log(response);
