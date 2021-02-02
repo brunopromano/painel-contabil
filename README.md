@@ -1,4 +1,4 @@
-# Painel Contabil
+# Painel Contábil
 
 ## Stack Utilizada
 * [.Net Core 3.1](#Backend)
@@ -6,7 +6,6 @@
 * SQL Server 15
 * Postman 8
 * [Entity Framework Core 3.11](#Migrations)
-<br>
 <br>
 
 
@@ -18,8 +17,8 @@ $ cd PainelContabil.Repository
 $ dotnet ef --startup-project ../ProAgil.API database update 
 ~~~
 
-<b>ATENÇÃO:</b> Após as tabelas criadas é necessário criar um trigger. Para isso, execute o 
-código que está no arquivo `PainelContabil.Repository/BalancoDia_Trigger.sql` no SQL Management Studio.
+<b>ATENÇÃO:</b> <i>Após as tabelas criadas é necessário criar um trigger. Para isso, execute o 
+código que está no arquivo `PainelContabil.Repository/BalancoDia_Trigger.sql` no SQL Management Studio.</i>
 <br>
 <br>
 
@@ -36,9 +35,14 @@ Para iniciar a API:
 $ dotnet run --project PainelContabil.API
 ```
 
+## Swagger
+
+Para verificar a documentação da API inicie o backend e entre em `http://localhost:5000/swagger`.
+
+
 ## Frontend
 
-Para instalar as dependências (é necessário ter o <b>`NodeJs`</b> instalado e o <b>`npm`</b>) deve-se apontar para a pasta `PainelContabilClient` e então:
+Para instalar as dependências (é necessário ter o <b>`NodeJs`</b> e o <b>`npm`</b> instalados) deve-se apontar para a pasta `PainelContabilClient` e então:
 ```cmd
 $ npm i
 ```
